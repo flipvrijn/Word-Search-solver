@@ -1,8 +1,8 @@
 package wordsearch;
 
 /**
- *
- * @author flipvanrijn
+ * Small word search solver.
+ * @author Flip van Rijn
  */
 public class Main
 {

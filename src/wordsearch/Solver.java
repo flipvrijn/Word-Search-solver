@@ -3,8 +3,8 @@ package wordsearch;
 import java.util.*;
 
 /**
- *
- * @author flipvanrijn
+ * Class which contains all heuristics to solve a word search puzzle.
+ * @author Flip van Rijn
  */
 public class Solver
 {
@@ -12,6 +12,9 @@ public class Solver
     private String[] words;
     private Map<String, Coord> solutions = new HashMap<String, Coord>();
 
+    /**
+     * Class for the coordinates of the begin and end position of a word.
+     */
     public class Coord
     {
         public int startX, startY, endX, endY;
@@ -23,6 +26,10 @@ public class Solver
             this.endY = endY;
         }
 
+        /**
+         * Basic toString method to show the coordinates on screen.
+         * @return String
+         */
         @Override
         public String toString()
         {
@@ -35,18 +42,33 @@ public class Solver
         }
     }
 
+    /**
+     * Constructor which sets the grid and the words to look for.
+     * @param grid The grid with characters
+     * @param words The words
+     */
     public Solver(char[][] grid, String[] words)
     {
         this.grid = new Grid(grid);
         this.words = words;
     }
 
+    /**
+     * Method which searches for each word in the grid.
+     */
     public void solve()
     {
         for (String word : words)
             findWord(word);
     }
 
+    /**
+     * Method which searches the given word in the grid with characters, by
+     * going by each character in the grid and look if it matches the first
+     * letter. If that is the case, the method continues to expand in
+     * each direction.
+     * @param word The word
+     */
     private void findWord(String word)
     {
         char firstLetter = word.charAt(0);
@@ -77,7 +99,14 @@ public class Solver
             }
         }
     }
-    
+
+    /**
+     * Expands to the left if the word is in that direction.
+     * @param x The column
+     * @param y The row
+     * @param word The word
+     * @return boolean
+     */
     private boolean checkLeft(int x, int y, String word)
     {
         if ((x + 1) - word.length() < 0)
@@ -94,6 +123,13 @@ public class Solver
         return true;
     }
 
+    /**
+     * Expands to the right if the word is in that direction.
+     * @param x The column
+     * @param y The row
+     * @param word The word
+     * @return boolean
+     */
     private boolean checkRight(int x, int y, String word)
     {
         if (x + word.length() > grid.width())
@@ -110,6 +146,13 @@ public class Solver
         return true;
     }
 
+    /**
+     * Expands downwards if the word is in that direction.
+     * @param x The column
+     * @param y The row
+     * @param word The word
+     * @return boolean
+     */
     private boolean checkDown(int x, int y, String word)
     {
         if (y + word.length() > grid.height())
@@ -126,6 +169,13 @@ public class Solver
         return true;
     }
 
+    /**
+     * Expands upwards if the word is in that direction.
+     * @param x The column
+     * @param y The row
+     * @param word The word
+     * @return boolean
+     */
     private boolean checkUp(int x, int y, String word)
     {
         if ((y + 1) - word.length() < 0)
@@ -142,6 +192,14 @@ public class Solver
         return true;
     }
 
+    /**
+     * Expands to the diagonal to left-upwards (\) if the word is in
+     * that direction.
+     * @param x The column
+     * @param y The row
+     * @param word The word
+     * @return boolean
+     */
     private boolean checkLeftUp(int x, int y, String word)
     {
         if ((y + 1) - word.length() < 0 || (x + 1) - word.length() < 0)
@@ -159,6 +217,14 @@ public class Solver
         return true;
     }
 
+    /**
+     * Expands to the diagonal to right-downwards (\) if the word is in
+     * that direction.
+     * @param x The column
+     * @param y The row
+     * @param word The word
+     * @return boolean
+     */
     private boolean checkRightDown(int x, int y, String word)
     {
         if (y + word.length() > grid.height() || x + word.length() > grid.width())
@@ -176,6 +242,14 @@ public class Solver
         return true;
     }
 
+    /**
+     * Expands to the diagonal to left-downwards (/) if the word is in
+     * that direction.
+     * @param x The column
+     * @param y The row
+     * @param word The word
+     * @return boolean
+     */
     private boolean checkLeftDown(int x, int y, String word)
     {
         if (y + word.length() > grid.height() || (x + 1) - word.length() < 0)
@@ -193,6 +267,14 @@ public class Solver
         return true;
     }
 
+    /**
+     * Expands to the diagonal to right-upwards (/) if the word is in
+     * that direction.
+     * @param x The column
+     * @param y The row
+     * @param word The word
+     * @return boolean
+     */
     private boolean checkRightUp(int x, int y, String word)
     {
         if ((y + 1) - word.length() < 0 || x + word.length() > grid.width())
@@ -209,7 +291,12 @@ public class Solver
 
         return true;
     }
-    
+
+    /**
+     * A basic toString function to show the grid and the words along with
+     * their start- and end-coordinates on the screen.
+     * @return String
+     */
     @Override
     public String toString()
     {
